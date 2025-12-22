@@ -1,0 +1,13 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: Test 1
+  description: 'Test
+
+    '
+spec:
+  owner: SKVIS
+  criticality: Middels
+  childFunctions:
+  - test11
+  dependsOn: []
