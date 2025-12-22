@@ -2,9 +2,16 @@ apiVersion: kartverket.dev/v1alpha1
 kind: Function
 metadata:
   name: Test1.1
-  description: ''
+  description: ""
 spec:
   owner: SKVIS
   criticality: Middels
   childFunctions: []
-  dependsOn: []
+  dependsOn: &a1 []
+  type: asd
+  dependsOnSystems: *a1
+  dependsOnComponents:
+    - component:default/regelrett
+    - component:default/skpyproj
+    - component:default/skip-scripts
+  dependsOnFunctions: *a1
