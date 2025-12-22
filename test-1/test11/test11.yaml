@@ -1,10 +1,12 @@
 apiVersion: kartverket.dev/v1alpha1
 kind: Function
 metadata:
-  name: Test1.1
-  description: ''
+  name: Test1.11111
+  description: ""
+  tags:
+    - tag
 spec:
-  owner: SKVIS
+  owner: group:default/global_geodesi_-_team_lead
   criticality: Middels
   childFunctions: []
   dependsOn: []
