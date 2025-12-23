@@ -2,7 +2,12 @@ apiVersion: kartverket.dev/v1alpha1
 kind: Function
 metadata:
   name: Test1.1
-  description: ''
+  description: ""
+  tags:
+    - kjnjknjk
+  links:
+    - url: Test
+      title: Test
 spec:
   owner: SKVIS
   criticality: Middels
