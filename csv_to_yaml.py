@@ -15,7 +15,7 @@ Usage:
     python3 -m venv venv
     source venv/bin/activate
     pip install pyyaml
-    python csv_to_yaml.py funkreg.csv output_folder team_names.csv
+    python3 csv_to_yaml.py funkreg.csv output_folder team_names.csv
 
 """
 
@@ -125,7 +125,7 @@ def read_csv_data(csv_file):
                 'name': row['name'],
                 'path': row['path'],
                 'team': row['team'],
-                'beskrivelse': row['beskrivelse'],
+                'beskrivelse': row.get('beskrivelse', ''),  # Default to empty string if missing
                 'kritikalitet': row.get('kritikalitet', ''),
                 'dependencies': dependencies
             })
@@ -153,17 +153,104 @@ def create_yaml_structure(function, child_functions):
     return yaml_data
 
 
-def write_combined_yaml_file(all_yaml_data, output_dir, filename='example.yaml'):
-    """Write all YAML data to a single file with --- separators."""
-    filepath = output_dir / filename
+def write_locations_file(created_files, output_dir):
+    """
+    Create a locations.yaml file at the root with references to all YAML files.
+    """
+    # Convert absolute paths to relative paths from output_dir
+    relative_paths = []
+    for file_path in created_files:
+        try:
+            rel_path = file_path.relative_to(output_dir)
+            relative_paths.append(f"./{rel_path}")
+        except ValueError:
+            # If we can't make it relative, use the path as-is
+            relative_paths.append(str(file_path))
     
-    with open(filepath, 'w', encoding='utf-8') as f:
-        for i, yaml_data in enumerate(all_yaml_data):
-            if i > 0:
-                f.write('\n---\n')
+    # Sort for consistency
+    relative_paths.sort()
+    
+    # Create the locations.yaml content
+    locations_data = {
+        'apiVersion': 'backstage.io/v1alpha1',
+        'kind': 'Location',
+        'metadata': {
+            'name': 'Functions'
+        },
+        'spec': {
+            'type': 'url',
+            'targets': relative_paths
+        }
+    }
+    
+    # Write the locations file, name it catalog-info.yaml
+    locations_file = output_dir / 'catalog-info.yaml'
+    with open(locations_file, 'w', encoding='utf-8') as f:
+        # Add comment at the top
+        f.write('# nonk8s\n')
+        yaml.dump(locations_data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+    
+    print(f"  ✓ Created locations.yaml with {len(relative_paths)} targets")
+    return locations_file
+
+
+def write_yaml_files_hierarchically(functions, output_dir):
+    """
+    Write YAML files in a hierarchical folder structure.
+    - Every function gets its own folder
+    - Each YAML file contains only one function
+    """
+    # Create a lookup for quick access
+    functions_by_path = {func['path']: func for func in functions}
+    
+    # Find all top-level functions (paths with exactly 2 parts, e.g., "1.4")
+    top_level_functions = [func for func in functions if len(func['path'].split('.')) == 2]
+    
+    created_files = []
+    
+    def write_function_recursively(function, parent_dir):
+        """Recursively write a function and its descendants."""
+        func_name = sanitize_filename(function['name'])
+        child_functions_list = find_child_functions(function['path'], functions)
+        
+        # Every function gets its own folder
+        func_folder = parent_dir / func_name
+        func_folder.mkdir(parents=True, exist_ok=True)
+        
+        # Write the function's YAML file inside its folder
+        yaml_file = func_folder / f"{func_name}.yaml"
+        
+        # Write this function's YAML
+        with open(yaml_file, 'w', encoding='utf-8') as f:
+            yaml_data = create_yaml_structure(function, child_functions_list)
             yaml.dump(yaml_data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+        
+        created_files.append(yaml_file)
+        
+        # Recursively process children
+        for child_name in child_functions_list:
+            # Find the child function by matching the sanitized name
+            child_func = None
+            for func in functions:
+                if sanitize_filename(func['name']) == child_name:
+                    # Make sure it's actually a child of this function
+                    if func['path'].startswith(function['path'] + '.'):
+                        # Check it's a direct child (one level deeper)
+                        if len(func['path'].split('.')) == len(function['path'].split('.')) + 1:
+                            child_func = func
+                            break
+            
+            if child_func:
+                # Children go inside this function's folder
+                write_function_recursively(child_func, func_folder)
     
-    return filepath
+    # Process each top-level function
+    for top_func in top_level_functions:
+        write_function_recursively(top_func, output_dir)
+        func_name = sanitize_filename(top_func['name'])
+        print(f"  ✓ Created folder structure for {func_name}")
+    
+    return created_files
 
 
 def main():
@@ -219,24 +306,17 @@ def main():
             print(f"  ⚠ {team_id} (not found in mapping, keeping UUID)")
     print()
     
-    # Process each function and collect YAML data
-    print("Processing functions...")
-    all_yaml_data = []
-    for function in functions:
-        # Find child functions
-        child_functions = find_child_functions(function['path'], functions)
-        
-        # Create YAML structure
-        yaml_data = create_yaml_structure(function, child_functions)
-        all_yaml_data.append(yaml_data)
-        
-        print(f"  • {function['name']} (owner: {function['team']}, children: {len(child_functions)})")
+    # Write YAML files organized by hierarchy
+    print("Creating YAML files...")
+    created_files = write_yaml_files_hierarchically(functions, output_dir)
     
-    # Write all data to a single file
     print()
-    filepath = write_combined_yaml_file(all_yaml_data, output_dir)
+    print("Creating locations.yaml...")
+    locations_file = write_locations_file(created_files, output_dir)
     
-    print(f"✓ Successfully created {filepath} with {len(all_yaml_data)} functions")
+    print()
+    print(f"✓ Successfully created {len(created_files)} YAML file(s) in {output_dir}")
+    print(f"✓ Created {locations_file.name} with all function references")
 
 
 if __name__ == '__main__':
