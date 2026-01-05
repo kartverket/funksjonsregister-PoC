@@ -3,9 +3,6 @@ kind: Function
 metadata:
   name: Test1.1
   description: ""
-  links:
-    - url: https://regelrett-1024826672490.europe-north1.run.app/context/5a130949-1e2e-4d02-b290-3b15d95500b0
-      title: Regelrett-skjema
 spec:
   owner: SKVIS
   criticality: Middels
