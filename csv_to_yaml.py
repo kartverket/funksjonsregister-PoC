@@ -135,11 +135,14 @@ def read_csv_data(csv_file):
 
 def create_yaml_structure(function, child_functions):
     """Create the YAML structure for a function."""
+    # Sanitize the name for metadata.name (replace spaces with hyphens, lowercase)
+    metadata_name = function['name'].strip().replace(' ', '-').lower()
+    
     yaml_data = {
         'apiVersion': 'kartverket.dev/v1alpha1',
         'kind': 'Function',
         'metadata': {
-            'name': function['name'],
+            'name': metadata_name,
             'description': function['beskrivelse'] if function['beskrivelse'] else ''
         },
         'spec': {
