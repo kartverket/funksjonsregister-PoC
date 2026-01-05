@@ -4,8 +4,10 @@ metadata:
   name: Test1.1
   description: ""
   links:
-    - url: https://regelrett-1024826672490.europe-north1.run.app/context/5a130949-1e2e-4d02-b290-3b15d95500b0
-      title: Regelrett-skjema
+    - url: testurl
+      title: tittel
+    - url: test2url
+      title: tittel2
 spec:
   owner: SKVIS
   criticality: Middels
