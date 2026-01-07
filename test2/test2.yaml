@@ -4,9 +4,7 @@ metadata:
   name: Test2
   description: ""
   title: Test2 med avhengigheter
-  links:
-    - url: ""
-      title: ""
+
 spec:
   owner: SKVIS
   criticality: Middels
