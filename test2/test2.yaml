@@ -2,10 +2,23 @@ apiVersion: kartverket.dev/v1alpha1
 kind: Function
 metadata:
   name: Test2
-  description: ''
+  description: ""
+  title: Test2 med avhengigheter
+  links:
+    - url: ""
+      title: ""
 spec:
   owner: SKVIS
   criticality: Middels
   childFunctions:
-  - test21
+    - test21
   dependsOn: []
+  type: core-function
+  dependsOnSystems:
+    - system:default/utviklerportal
+  dependsOnComponents:
+    - component:default/security-champion-service
+  dependsOnFunctions:
+    - function:default/Test1.1
+    - function:default/Test2.1
+    - function:default/Test2
