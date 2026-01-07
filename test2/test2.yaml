@@ -2,10 +2,13 @@ apiVersion: kartverket.dev/v1alpha1
 kind: Function
 metadata:
   name: Test2
-  description: ''
+  description: ""
+  links:
+    - url: ""
+      title: ""
 spec:
   owner: SKVIS
   criticality: Middels
   childFunctions:
-  - test21
+    - test21
   dependsOn: []
