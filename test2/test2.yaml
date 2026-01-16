@@ -9,7 +9,7 @@ spec:
   owner: SKVIS
   criticality: Middels
   childFunctions:
-    - test21
+    - test2.1
   dependsOn: []
   type: core-function
   dependsOnSystems:
