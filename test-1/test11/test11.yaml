@@ -11,3 +11,4 @@ spec:
   criticality: Middels
   childFunctions: []
   dependsOn: []
+  parentFunction: function:default/Test2
