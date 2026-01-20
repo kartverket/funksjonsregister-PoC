@@ -4,9 +4,8 @@ metadata:
   name: Test2
   description: ""
   title: Test2 med avhengigheter
-
 spec:
-  owner: SKVIS
+  owner: group:default/kartdata
   criticality: Middels
   childFunctions:
     - test2.1
@@ -19,4 +18,3 @@ spec:
   dependsOnFunctions:
     - function:default/Test1.1
     - function:default/Test2.1
-  
