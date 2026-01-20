@@ -1,0 +1,15 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: rootfunction
+  description: ""
+  title: Kartverket
+
+spec:
+  owner: SKVIS
+  criticality: Middels
+  childFunctions:
+    - test2
+    - function:default/test1.1
+  dependsOn: []
+  type: core-function
