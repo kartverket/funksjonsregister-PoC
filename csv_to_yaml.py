@@ -83,10 +83,38 @@ def sanitize_filename(name):
     return filename
 
 
+def find_parent_function(current_path, all_functions):
+    """
+    Find the parent function based on path hierarchy.
+    A parent has a path that is exactly one level up.
+    
+    Example: 
+    - Child: "1.4.5" -> Parent: "1.4"
+    - Child: "1.4.5.9" -> Parent: "1.4.5"
+    - Child: "1.4" -> Parent: "rootfunction" (top-level)
+    """
+    path_parts = current_path.split('.')
+    
+    # If only 2 parts (e.g., "1.4"), this is a top-level function
+    # Its parent is "rootfunction"
+    if len(path_parts) <= 2:
+        return "rootfunction"
+    
+    # Get parent path by removing the last part
+    parent_path = '.'.join(path_parts[:-1])
+    
+    # Find the parent function
+    for func in all_functions:
+        if func['path'] == parent_path:
+            return sanitize_filename(func['name'])
+    
+    return None
+
+
 def find_child_functions(current_path, all_functions):
     """
     Find direct child functions based on path hierarchy.
-    A child has a path that starts with the parent path and has exactly one more level.
+    Used for determining folder structure.
     
     Example: 
     - Parent: "1.4" -> Children: "1.4.5", "1.4.6", "1.4.7"
@@ -101,7 +129,7 @@ def find_child_functions(current_path, all_functions):
         if func_path.startswith(current_path + '.'):
             func_depth = len(func_path.split('.'))
             if func_depth == current_depth + 1:
-                children.append(sanitize_filename(func['name']))
+                children.append(func)
     
     return children
 
@@ -133,7 +161,7 @@ def read_csv_data(csv_file):
     return functions
 
 
-def create_yaml_structure(function, child_functions):
+def create_yaml_structure(function, parent_function):
     """Create the YAML structure for a function."""
     # Sanitize the name for metadata.name (replace spaces with hyphens, lowercase)
     metadata_name = function['name'].strip().replace(' ', '-').lower()
@@ -148,8 +176,8 @@ def create_yaml_structure(function, child_functions):
         'spec': {
             'owner': function['team'],
             'criticality': function['kritikalitet'] if function['kritikalitet'] else '',
-            'childFunctions': child_functions,
-            'dependsOn': function['dependencies']
+            'parentFunction': parent_function,
+            'dependsOnFunctions': function['dependencies']
         }
     }
     
@@ -193,7 +221,7 @@ def write_locations_file(created_files, output_dir):
         f.write('# nonk8s\n')
         yaml.dump(locations_data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
     
-    print(f"  ✓ Created locations.yaml with {len(relative_paths)} targets")
+    print(f"  ✓ Created catalog-info.yaml with {len(relative_paths)} targets")
     return locations_file
 
 
@@ -223,29 +251,20 @@ def write_yaml_files_hierarchically(functions, output_dir):
         # Write the function's YAML file inside its folder
         yaml_file = func_folder / f"{func_name}.yaml"
         
+        # Find parent function for this function
+        parent_function = find_parent_function(function['path'], functions)
+        
         # Write this function's YAML
         with open(yaml_file, 'w', encoding='utf-8') as f:
-            yaml_data = create_yaml_structure(function, child_functions_list)
+            yaml_data = create_yaml_structure(function, parent_function)
             yaml.dump(yaml_data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
         
         created_files.append(yaml_file)
         
         # Recursively process children
-        for child_name in child_functions_list:
-            # Find the child function by matching the sanitized name
-            child_func = None
-            for func in functions:
-                if sanitize_filename(func['name']) == child_name:
-                    # Make sure it's actually a child of this function
-                    if func['path'].startswith(function['path'] + '.'):
-                        # Check it's a direct child (one level deeper)
-                        if len(func['path'].split('.')) == len(function['path'].split('.')) + 1:
-                            child_func = func
-                            break
-            
-            if child_func:
-                # Children go inside this function's folder
-                write_function_recursively(child_func, func_folder)
+        for child_func in child_functions_list:
+            # Children go inside this function's folder
+            write_function_recursively(child_func, func_folder)
     
     # Process each top-level function
     for top_func in top_level_functions:
@@ -314,7 +333,7 @@ def main():
     created_files = write_yaml_files_hierarchically(functions, output_dir)
     
     print()
-    print("Creating locations.yaml...")
+    print("Creating catalog-info.yaml...")
     locations_file = write_locations_file(created_files, output_dir)
     
     print()
