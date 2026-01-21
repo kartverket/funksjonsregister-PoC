@@ -1,0 +1,8 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: tester
+spec:
+  type: ""
+  owner: group:default/tilgangsstyring_-_tech_lead
+  parentFunction: function:default/Test2.1
