@@ -6,6 +6,8 @@ metadata:
   links:
     - url: https://regelrett-1024826672490.europe-north1.run.app/context/5a130949-1e2e-4d02-b290-3b15d95500b0
       title: Regelrett-skjema
+  tags:
+    - abc123
 spec:
   owner: SKVIS
   criticality: Middels
