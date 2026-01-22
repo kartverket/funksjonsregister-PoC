@@ -1,0 +1,8 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: test
+spec:
+  type: ""
+  owner: group:default/topografisk_grunndatabase
+  parentFunction: function:default/Test2.1
