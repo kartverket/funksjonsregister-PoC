@@ -1,0 +1,8 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: nyfunksjon
+spec:
+  type: ""
+  owner: group:default/norge_i_bilder_-_tech_lead
+  parentFunction: function:default/Test2.1
