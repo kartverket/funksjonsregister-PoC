@@ -1,0 +1,11 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: Test1.1
+  links:
+    - url: https://regelrett-1024826672490.europe-north1.run.app/context/5a130949-1e2e-4d02-b290-3b15d95500b0
+      title: Regelrett-skjema
+spec:
+  type: ""
+  owner: SKVIS
+  parentFunction: function:default/Test2.1
