@@ -1,0 +1,8 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: rttdrdtrrdtrtd
+spec:
+  type: ""
+  owner: group:default/rett_i_kartet_-_team_lead
+  parentFunction: function:default/Test2.1
