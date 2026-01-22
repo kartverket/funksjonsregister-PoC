@@ -6,19 +6,8 @@ metadata:
 spec:
   type: url
   targets:
-  - ./test-1/test-1.yaml
-  - ./test-1/test11/test11.yaml
-  - ./test2/test2.yaml
-  - ./test2/test21/test21.yaml
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "funksjonsregister-poc"
-  tags:
-  - "public"
-spec:
-  type: "ops"
-  lifecycle: "production"
-  owner: "skvis"
-  system: "utviklerportal"
+    - ./test-1/test-1.yaml
+    - ./test-1/test11/test11.yaml
+    - ./test2/test2.yaml
+    - ./test2/test21/test21.yaml
+    - ./root/rootfunction.yaml
