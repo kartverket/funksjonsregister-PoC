@@ -9,5 +9,6 @@ metadata:
 spec:
   owner: SKVIS
   criticality: Middels
-  childFunctions: []
+  parentFunction:
+    - test-1
   dependsOn: []
