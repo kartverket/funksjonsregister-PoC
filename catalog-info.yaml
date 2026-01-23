@@ -37,7 +37,5 @@ spec:
   lifecycle: experimental
   owner: skvis
   system: utviklerportal
-  definition: | 
-    openapi: "3.0.0" 
-    info:
-        title: test-funksjonsregister-PoC-api
+  definition: 
+      $text: https://www.grunnbok.no/grunnbok/wsapi/v2/StoreServiceWS?WSDL
