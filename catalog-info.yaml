@@ -12,14 +12,17 @@ spec:
     - ./test2/test21/test21.yaml
     - ./root/rootfunction.yaml
 ---
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
+apiVersion: backstage.io/v1alpha1
+kind: Component
 metadata:
-  name: "funksjonsregister-poc"
+  name: funksjonsregisterPoC
   tags:
-    - "public"
+    - internal
 spec:
-  type: "ops"
-  lifecycle: "production"
-  owner: "skvis"
-  system: "utviklerportal"
+  type: service
+  lifecycle: production
+  owner: skvis
+  system: utviklerportal
+  dependsOn: 
+    - resource:default/regelrett
+    - component:default/security-champion-service
