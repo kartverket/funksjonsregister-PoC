@@ -26,3 +26,18 @@ spec:
   dependsOn: 
     - resource:default/regelrett
     - component:default/security-champion-service
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: test-funksjonsregisterPoC-api
+  title: FunksjonsregisterPoC API
+spec:
+  type: service
+  lifecycle: experimental
+  owner: skvis
+  system: utviklerportal
+  definition: | 
+    openapi: "3.0.0" 
+    info:
+        title: test-funksjonsregister-PoC-api
