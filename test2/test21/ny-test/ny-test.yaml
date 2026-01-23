@@ -1,0 +1,8 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: ny-test
+spec:
+  type: ""
+  owner: group:default/skvis
+  parentFunction: function:default/Test2.1

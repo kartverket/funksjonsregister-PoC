@@ -1,4 +1,3 @@
-# nonk8s
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
@@ -11,6 +10,8 @@ spec:
     - ./test2/test2.yaml
     - ./test2/test21/test21.yaml
     - ./root/rootfunction.yaml
+    - ./test2/test21/ny-test/ny-test.yaml
+
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
@@ -23,6 +24,6 @@ spec:
   lifecycle: production
   owner: skvis
   system: utviklerportal
-  dependsOn: 
+  dependsOn:
     - resource:default/regelrett
     - component:default/security-champion-service
