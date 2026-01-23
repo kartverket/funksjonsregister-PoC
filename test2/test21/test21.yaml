@@ -12,3 +12,4 @@ spec:
     - system:default/utviklerportal
   dependsOnComponents:
     - component:default/security-champion-service
+  parentFunction: function:default/Test2
