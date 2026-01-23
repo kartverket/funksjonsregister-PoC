@@ -8,8 +8,7 @@ metadata:
 spec:
   owner: SKVIS
   criticality: Middels
-  parentFunction:
-    - rootfunction
+  parentFunction: rootfunction
   dependsOn: []
   type: core-function
   dependsOnSystems:
