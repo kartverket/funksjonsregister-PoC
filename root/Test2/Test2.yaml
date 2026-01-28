@@ -1,0 +1,11 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: Test2
+  title: Test2 med avhengigheter
+  tags:
+    - testtag
+spec:
+  type: core-function
+  owner: SKVIS
+  parentFunction: function:default/rootfunction
