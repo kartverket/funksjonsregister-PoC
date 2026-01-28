@@ -3,10 +3,12 @@ kind: Function
 metadata:
   name: Test2.1
   description: ""
+  tags:
+    - testtag
 spec:
   owner: SKVIS
   criticality: Lav
-  parentFunction: Test2
+  parentFunction: function:default/Test2
   dependsOn: []
   dependsOnSystems:
     - system:default/utviklerportal
