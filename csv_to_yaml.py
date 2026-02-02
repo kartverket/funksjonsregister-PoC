@@ -26,6 +26,63 @@ import yaml
 from pathlib import Path
 
 
+def sanitize_for_owner(name):
+    """
+    Sanitize name for use in owner field.
+    Rules:
+    - Replace whitespace with underscore
+    - Remove æøå (and their uppercase versions)
+    - Keep : and / (for Backstage entity refs like group:default/teamname)
+    - Remove other special characters (keep only alphanumeric, hyphens, underscores, periods, colons, slashes)
+    - Convert to lowercase
+    
+    Example: "Group: Default/Team Name!" -> "group:_default/team_name"
+    """
+    # Replace whitespace with underscore
+    sanitized = name.replace(' ', '_')
+    
+    # Remove æøå characters (both lowercase and uppercase)
+    chars_to_remove = 'æøåÆØÅ'
+    for char in chars_to_remove:
+        sanitized = sanitized.replace(char, '')
+    
+    # Keep only alphanumeric characters, hyphens, underscores, periods, colons, and slashes
+    sanitized = ''.join(c for c in sanitized if c.isalnum() or c in '-_.:/')
+    
+    # Convert to lowercase
+    sanitized = sanitized.lower()
+    
+    return sanitized
+
+
+def sanitize_for_metadata(name):
+    """
+    Sanitize name for use in metadata.name and owner field.
+    Rules:
+    - Replace whitespace with underscore
+    - Remove æøå (and their uppercase versions)
+    - Remove special characters (keep only alphanumeric, hyphens, underscores, periods)
+    - Convert to lowercase
+    
+    Example: "Testø - team-lead!" -> "test_-_team-lead"
+    """
+    # Replace whitespace with underscore
+    sanitized = name.replace(' ', '_')
+    
+    # Remove æøå characters (both lowercase and uppercase)
+    chars_to_remove = 'æøåÆØÅ'
+    for char in chars_to_remove:
+        sanitized = sanitized.replace(char, '')
+    
+    # Keep only alphanumeric characters, hyphens, underscores, and periods
+    sanitized = ''.join(c for c in sanitized if c.isalnum() or c in '-_.')
+    
+    # Convert to lowercase
+    sanitized = sanitized.lower()
+    
+    return sanitized
+
+
 def load_team_names(team_csv_file):
     """Load team UUID to name mapping from CSV."""
     team_mapping = {}
@@ -36,11 +93,18 @@ def load_team_names(team_csv_file):
             team_id = row['id']
             team_name = row['displayName']
             
-            # Remove the specific prefix "AAD - TF - TEAM -" if present
-            # Example: "AAD - TF - TEAM - TEST-NAME-TEAM" -> "TEST-NAME-TEAM"
-            prefix = "AAD - TF - TEAM - "
-            if team_name.startswith(prefix):
-                team_name = team_name[len(prefix):]
+            # Remove AAD - TF prefixes if present
+            prefixes = [
+                "AAD - TF - TEAM - ",
+                "AAD - TF - BUSINESS UNIT - ",
+                "AAD - TF - PRODUCT AREA - ",
+                "AAD - TF - ROLE - "
+            ]
+            
+            for prefix in prefixes:
+                if team_name.startswith(prefix):
+                    team_name = team_name[len(prefix):]
+                    break
             
             team_mapping[team_id] = team_name
     
@@ -163,18 +227,30 @@ def read_csv_data(csv_file):
 
 def create_yaml_structure(function, parent_function):
     """Create the YAML structure for a function."""
-    # Sanitize the name for metadata.name (replace spaces with hyphens, lowercase)
-    metadata_name = function['name'].strip().replace(' ', '-').lower()
+    # Get original name for title and metadata.name
+    original_name = function['name'].strip()
+    
+    # Sanitize the name for metadata.name (use original name)
+    metadata_name = sanitize_for_metadata(original_name)
+    
+    
+    team_value = function['team']
+    if team_value == "group:default/kartverket" or team_value == "kartverket":
+        sanitized_owner = "group:default/statens_kartverk"
+    else:
+        # Sanitize owner using owner-specific sanitization (keeps : and /)
+        sanitized_owner = sanitize_for_owner(team_value)
     
     yaml_data = {
         'apiVersion': 'kartverket.dev/v1alpha1',
         'kind': 'Function',
         'metadata': {
             'name': metadata_name,
+            'title': original_name,
             'description': function['beskrivelse'] if function['beskrivelse'] else ''
         },
         'spec': {
-            'owner': function['team'],
+            'owner': sanitized_owner,
             'criticality': function['kritikalitet'] if function['kritikalitet'] else '',
             'parentFunction': parent_function,
             'dependsOnFunctions': function['dependencies']
