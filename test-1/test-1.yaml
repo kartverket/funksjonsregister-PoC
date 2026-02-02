@@ -2,9 +2,9 @@ apiVersion: kartverket.dev/v1alpha1
 kind: Function
 metadata:
   name: Test-1
-  description: "Test"
+  description: Test
 spec:
   owner: SKVIS
   criticality: Middels
-  parentFunction: rootfunction
+  parentFunction: function:default/Test2.1
   dependsOn: []
