@@ -120,7 +120,7 @@ def resolve_dependencies(functions):
     id_to_name = {}
     for func in functions:
         func_id = func['id']
-        func_name = sanitize_filename(func['name'])
+        func_name = sanitize_for_metadata(func['name'])
         id_to_name[func_id] = func_name
     
     # Replace dependency IDs with function names
@@ -170,7 +170,7 @@ def find_parent_function(current_path, all_functions):
     # Find the parent function
     for func in all_functions:
         if func['path'] == parent_path:
-            return sanitize_filename(func['name'])
+            return sanitize_for_metadata(func['name'])
     
     return None
 
@@ -232,7 +232,6 @@ def create_yaml_structure(function, parent_function):
     
     # Sanitize the name for metadata.name (use original name)
     metadata_name = sanitize_for_metadata(original_name)
-    
     
     team_value = function['team']
     if team_value == "group:default/kartverket" or team_value == "kartverket":
