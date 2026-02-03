@@ -80,6 +80,8 @@ def sanitize_for_metadata(name):
     # Convert to lowercase
     sanitized = sanitized.lower()
     
+    sanitized = sanitized.strip('.-_\\')
+    
     return sanitized
 
 
