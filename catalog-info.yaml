@@ -11,6 +11,9 @@ spec:
     - ./test2/test2.yaml
     - ./test2/test21/test21.yaml
     - ./root/rootfunction.yaml
+    - ./klær/klær.yaml
+    - ./klær/tøy/tøy.yaml
+
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
@@ -23,7 +26,7 @@ spec:
   lifecycle: production
   owner: skvis
   system: utviklerportal
-  dependsOn: 
+  dependsOn:
     - resource:default/regelrett
     - component:default/security-champion-service
 ---
@@ -37,5 +40,5 @@ spec:
   lifecycle: experimental
   owner: skvis
   system: utviklerportal
-  definition: 
-      $text: https://www.grunnbok.no/grunnbok/wsapi/v2/StoreServiceWS?WSDL
+  definition:
+    $text: https://www.grunnbok.no/grunnbok/wsapi/v2/StoreServiceWS?WSDL
