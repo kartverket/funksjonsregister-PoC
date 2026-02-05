@@ -7,5 +7,5 @@ metadata:
 spec:
   owner: skvis
   criticality: Høy
-  parentFunction: klr
+  parentFunction: function:default/ty
   dependsOnFunctions: []
