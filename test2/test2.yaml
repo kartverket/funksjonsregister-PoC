@@ -4,11 +4,10 @@ metadata:
   name: Test2
   description: ""
   title: Test2 med avhengigheter
-
 spec:
   owner: SKVIS
   criticality: Middels
-  parentFunction: rootfunction
+  parentFunction: function:default/Test1.1
   dependsOn: []
   type: core-function
   dependsOnSystems:
