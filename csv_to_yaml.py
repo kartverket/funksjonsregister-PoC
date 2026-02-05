@@ -140,6 +140,11 @@ def resolve_dependencies(functions):
 
 def sanitize_filename(name):
     """Convert function name to a valid filename."""
+    
+    chars_to_remove = 'æøåÆØÅ'
+    for char in chars_to_remove:
+        name = name.replace(char, '')
+    
     # Replace spaces and special characters with hyphens
     filename = name.lower().replace(' ', '-')
     # Remove any characters that aren't alphanumeric or hyphens
