@@ -1,0 +1,11 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: ty
+  title: Tøy2
+  description: Hus i norge
+spec:
+  owner: skvis
+  criticality: Høy
+  parentFunction: function:default/test-feil-feil
+  dependsOnFunctions: []
