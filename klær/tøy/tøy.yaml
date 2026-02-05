@@ -2,10 +2,10 @@ apiVersion: kartverket.dev/v1alpha1
 kind: Function
 metadata:
   name: ty
-  title: Tøy
+  title: Tøy2
   description: Hus i norge
 spec:
   owner: skvis
   criticality: Høy
-  parentFunction: klr
+  parentFunction: function:default/Test2
   dependsOnFunctions: []
