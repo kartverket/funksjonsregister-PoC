@@ -1,0 +1,15 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: tmp
+  title: test
+spec:
+  type: ""
+  owner: group:default/skvis_-_product_owner
+  dependsOnSystems:
+    - system:default/skip
+  dependsOnComponents:
+    - component:default/regelrett
+  dependsOnFunctions:
+    - function:default/rootfunction
+  parentFunction: function:default/rootfunction
