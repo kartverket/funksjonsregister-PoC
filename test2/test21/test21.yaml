@@ -6,9 +6,10 @@ metadata:
 spec:
   owner: SKVIS
   criticality: Lav
-  parentFunction: Test2
+  parentFunction: function:default/Test-1
   dependsOn: []
   dependsOnSystems:
     - system:default/utviklerportal
   dependsOnComponents:
     - component:default/security-champion-service
+  type: support-function
