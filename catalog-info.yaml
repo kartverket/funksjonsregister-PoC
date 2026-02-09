@@ -1,8 +1,8 @@
-# nonk8s
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
   name: testfunctions
+  tags: []
 spec:
   type: url
   targets:
@@ -11,6 +11,7 @@ spec:
     - ./test2/test2.yaml
     - ./test2/test21/test21.yaml
     - ./root/rootfunction.yaml
+
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
@@ -22,10 +23,11 @@ spec:
   type: service
   lifecycle: production
   owner: skvis
-  system: utviklerportal
-  dependsOn: 
+  system: system:default/utviklerportal
+  dependsOn:
     - resource:default/regelrett
     - component:default/security-champion-service
+
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API
@@ -33,9 +35,9 @@ metadata:
   name: test-funksjonsregisterPoC-api
   title: FunksjonsregisterPoC API
 spec:
-  type: service
+  type: wsdl
   lifecycle: experimental
   owner: skvis
-  system: utviklerportal
-  definition: 
-      https://www.grunnbok.no/grunnbok/wsapi/v2/StoreServiceWS?WSDL
+  system: system:default/utviklerportal
+  definition:
+    $text: https://www.grunnbok.no/grunnbok/wsapi/v2/StoreServiceWS?WSDL
