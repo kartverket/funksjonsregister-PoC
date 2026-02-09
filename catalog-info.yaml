@@ -38,4 +38,4 @@ spec:
   owner: skvis
   system: utviklerportal
   definition: 
-      https://www.grunnbok.no/grunnbok/wsapi/v2/StoreServiceWS?WSDL
+      $text: https://www.grunnbok.no/grunnbok/wsapi/v2/StoreServiceWS?WSDL
