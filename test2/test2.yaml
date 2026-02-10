@@ -10,7 +10,6 @@ spec:
   criticality: Middels
   parentFunction: rootfunction
   dependsOn: []
-  type: core-function
   dependsOnSystems:
     - system:default/utviklerportal
   dependsOnComponents:
