@@ -3,6 +3,7 @@ kind: Location
 metadata:
   name: testfunctions
   tags: []
+  title: tittel
 spec:
   type: url
   targets:
