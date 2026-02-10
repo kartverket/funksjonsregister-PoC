@@ -1,8 +1,8 @@
 apiVersion: kartverket.dev/v1alpha1
 kind: Function
 metadata:
-  name: Test1.1
-  title: nvhjhv
+  name: Test11
+  title: Test1.1
 spec:
   type: ""
   owner: SKVIS
