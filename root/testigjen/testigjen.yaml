@@ -1,0 +1,8 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: testigjen
+spec:
+  type: ""
+  owner: group:default/ngis_-_tech_lead
+  parentFunction: function:default/rootfunction
