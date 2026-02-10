@@ -10,6 +10,7 @@ spec:
     - ./test2/test21/test21.yaml
     - ./root/rootfunction.yaml
     - ./test-1/Test11/Test11.yaml
+    - ./root/aleksander/aleksander.yaml
 
 ---
 apiVersion: backstage.io/v1alpha1
