@@ -2,7 +2,6 @@ apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
   name: testfunctions
-
 spec:
   type: url
   targets:
@@ -11,6 +10,7 @@ spec:
     - ./test2/test2.yaml
     - ./test2/test21/test21.yaml
     - ./root/rootfunction.yaml
+    - ./test-1/test11/Aleksander/Aleksander.yaml
 
 ---
 apiVersion: backstage.io/v1alpha1

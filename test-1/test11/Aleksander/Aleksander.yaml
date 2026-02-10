@@ -1,0 +1,12 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: Aleksander
+spec:
+  type: ""
+  owner: group:default/skvis
+  dependsOnSystems:
+    - system:default/nibas
+  dependsOnComponents:
+    - component:default/regelrett
+  parentFunction: function:default/Test1.1
