@@ -11,6 +11,7 @@ spec:
     - ./test2/test2.yaml
     - ./test2/test21/test21.yaml
     - ./root/rootfunction.yaml
+    - ./root/nyFunk/nyFunk.yaml
 
 ---
 apiVersion: backstage.io/v1alpha1

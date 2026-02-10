@@ -1,0 +1,8 @@
+apiVersion: kartverket.dev/v1alpha1
+kind: Function
+metadata:
+  name: nyFunk
+spec:
+  type: ""
+  owner: group:default/skvis
+  parentFunction: function:default/rootfunction
