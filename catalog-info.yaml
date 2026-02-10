@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
   name: testfunctions
-
+  tags: []
 spec:
   type: url
   targets:
