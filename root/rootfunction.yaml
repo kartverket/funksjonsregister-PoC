@@ -9,4 +9,3 @@ spec:
   owner: SKVIS
   criticality: Middels
   dependsOn: []
-  type: core-function
