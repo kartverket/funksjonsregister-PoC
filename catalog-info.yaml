@@ -38,5 +38,4 @@ spec:
   lifecycle: experimental
   owner: skvis
   system: system:default/utviklerportal
-  definition:
-    $text: https://www.grunnbok.no/grunnbok/wsapi/v2/StoreServiceWS?WSDL
+  definition: " "
