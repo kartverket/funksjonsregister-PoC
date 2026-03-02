@@ -1,8 +1,0 @@
-apiVersion: kartverket.dev/v1alpha1
-kind: Function
-metadata:
-  name: Test11
-  title: Test1.1
-spec:
-  owner: SKVIS
-  parentFunction: function:default/Test-1
