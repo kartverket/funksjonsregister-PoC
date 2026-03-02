@@ -4,6 +4,5 @@ metadata:
   name: Test11
   title: Test1.1
 spec:
-  type: ""
   owner: SKVIS
   parentFunction: function:default/Test-1
